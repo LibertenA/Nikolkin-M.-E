@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 seconds=int(input())
 minutes=int(seconds/60)
-hours=int(seconds/60/60)
-days=int(seconds/60/60/24)
+seconds=seconds-minutes*60
+hours=int(minutes/60)
+minutes=minutes-hours*60
+days=int(hours/24)
+hours=hours-days*24
 print(days,hours,minutes,seconds, sep=':')
