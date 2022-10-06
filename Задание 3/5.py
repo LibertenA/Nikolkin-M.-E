@@ -1,4 +1,4 @@
-# -- coding: utf-8 --
+# -*- coding: utf-8 -*-
 def min(a,b,c):
     if a>c and b>c:
         return c

@@ -1,4 +1,4 @@
-# -- coding: utf-8 --
+# -*- coding: utf-8 -*-
 def squad(a,a1,b,b1):
     if ((a % 2 != 0 and a1 % 2 != 0) and ((b % 2 != 0) and (b1 % 2 != 0)))\
             or ((a % 2 != 0 and a1 % 2 != 0) and (b % 2 == 0 and b1 % 2 == 0))\

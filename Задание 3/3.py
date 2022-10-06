@@ -1,4 +1,4 @@
-# -- coding: utf-8 --
+# -*- coding: utf-8 -*-
 def t(minutes):
     minutes=minutes%(60*24)
     hours=minutes//60

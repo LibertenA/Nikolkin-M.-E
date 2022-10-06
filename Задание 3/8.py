@@ -1,4 +1,4 @@
-# -- coding: utf-8 --
+# -*- coding: utf-8 -*-
 def raven(a,b,c):
     if a == b and b == c:
         return ('3')
