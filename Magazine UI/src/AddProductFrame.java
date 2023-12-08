@@ -9,32 +9,46 @@ public class AddProductFrame extends JFrame {
     private JTextField textFieldCount;
     private JButton backButton;
     private JButton okButton;
-    private ComparProduct comparProduct;
+    private JTextField textFieldNumber;
+    private JComboBox comboBoxType;
 
-    public AddProductFrame(ComparProduct comparProduct) {
+    public AddProductFrame(ShowProductFrame showProductFrame) {
         this.setContentPane(mainProductPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
         this.setTitle("Добавление продукта");
-        this.comparProduct = comparProduct;
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddProductFrame.this.setVisible(false);
-                new MainProductFrame(comparProduct).setVisible(true);
-            }
+
+        backButton.addActionListener(e -> {
+            AddProductFrame.this.setVisible(false);
+            showProductFrame.revalidate();
+            showProductFrame.repaint();
+            showProductFrame.setVisible(true);
         });
+
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    comparProduct.add(new Products(textFieldName.getText(),
-                            Double.parseDouble(textFieldPrice.getText()),
-                                    Integer.parseInt(textFieldCount.getText())));
+                    showProductFrame.getMagazine().addProduct(new Product(
+                            comboBoxType.getSelectedItem().toString(), Integer.parseInt(textFieldNumber.getText()),
+                            textFieldName.getText(), Integer.parseInt(textFieldPrice.getText()),
+                            Integer.parseInt(textFieldCount.getText())
+                    ));
+                    AddProductFrame.this.setVisible(false);
+                    showProductFrame.revalidate();
+                    showProductFrame.repaint();
+                    showProductFrame.setVisible(true);
                 } catch (NumberFormatException ignored) {}
-                AddProductFrame.this.setVisible(false);
-                new MainProductFrame(comparProduct).setVisible(true);
             }
         });
+    }
+
+    public AddProductFrame(ShowProductFrame showProductFrame, Product product) {
+        this(showProductFrame);
+        comboBoxType.setSelectedItem(product.getType());
+        textFieldNumber.setText(Integer.toString(product.getNumber()));
+        textFieldName.setText(product.getName());
+        textFieldPrice.setText(Integer.toString(product.getPrice()));
+        textFieldCount.setText(Integer.toString(product.getCount()));
     }
 }
