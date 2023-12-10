@@ -1,24 +1,21 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class ShowProductFrame extends JFrame {
     private JPanel mainProductPanel;
     private JPanel productsPanel;
     private JButton addProductBtn;
+    private JButton closebtn;
     private final Magazine magazine;
 
     public ShowProductFrame() {
         this.setContentPane(mainProductPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(1000, 700);
         this.setTitle("Товары");
 
-        SQLiteDatabase db = new SQLiteDatabase();
-        magazine = new Magazine(db);
+        magazine = new Magazine();
 
         productsPanel.setLayout(new BoxLayout(productsPanel, BoxLayout.Y_AXIS));
         for (Product product : magazine.getAllProducts()) {
@@ -28,6 +25,11 @@ public class ShowProductFrame extends JFrame {
         addProductBtn.addActionListener(e -> {
             ShowProductFrame.this.setVisible(false);
             new AddProductFrame(ShowProductFrame.this).setVisible(true);
+        });
+
+        closebtn.addActionListener(e ->{
+            SQLiteDatabase.closeConnection();
+            System.exit(0);
         });
     }
 
@@ -43,16 +45,14 @@ public class ShowProductFrame extends JFrame {
 
     private class ProductPanel extends JPanel {
         public ProductPanel(Product product) {
+            this.setBackground(Color.white);
             JTextArea info = new JTextArea(product.toString());
             add(info);
 
             JButton editBtn = new JButton("Редактировать");
-            editBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ShowProductFrame.this.setVisible(false);
-                    new AddProductFrame(ShowProductFrame.this, product).setVisible(true);
-                }
+            editBtn.addActionListener(e -> {
+                ShowProductFrame.this.setVisible(false);
+                new AddProductFrame(ShowProductFrame.this, product).setVisible(true);
             });
             add(editBtn);
 

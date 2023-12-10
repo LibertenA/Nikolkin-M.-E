@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AddProductFrame extends JFrame {
     private JPanel mainProductPanel;
@@ -14,7 +12,7 @@ public class AddProductFrame extends JFrame {
 
     public AddProductFrame(ShowProductFrame showProductFrame) {
         this.setContentPane(mainProductPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(500, 500);
         this.setTitle("Добавление продукта");
 
@@ -25,21 +23,18 @@ public class AddProductFrame extends JFrame {
             showProductFrame.setVisible(true);
         });
 
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    showProductFrame.getMagazine().addProduct(new Product(
-                            comboBoxType.getSelectedItem().toString(), Integer.parseInt(textFieldNumber.getText()),
-                            textFieldName.getText(), Integer.parseInt(textFieldPrice.getText()),
-                            Integer.parseInt(textFieldCount.getText())
-                    ));
-                    AddProductFrame.this.setVisible(false);
-                    showProductFrame.revalidate();
-                    showProductFrame.repaint();
-                    showProductFrame.setVisible(true);
-                } catch (NumberFormatException ignored) {}
-            }
+        okButton.addActionListener(e -> {
+            try {
+                showProductFrame.getMagazine().addProduct(new Product(
+                        comboBoxType.getSelectedItem().toString(), Integer.parseInt(textFieldNumber.getText()),
+                        textFieldName.getText(), Integer.parseInt(textFieldPrice.getText()),
+                        Integer.parseInt(textFieldCount.getText())
+                ));
+                AddProductFrame.this.setVisible(false);
+                showProductFrame.revalidate();
+                showProductFrame.repaint();
+                showProductFrame.setVisible(true);
+            } catch (NumberFormatException ignored) {}
         });
     }
 

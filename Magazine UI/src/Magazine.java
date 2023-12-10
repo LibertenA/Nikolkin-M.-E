@@ -5,13 +5,10 @@ import java.util.List;
 public class Magazine {
     private final Connection connection;
 
-    public Magazine(SQLiteDatabase db) {
-        this.connection = db.getConnection();
-    }
+    public Magazine () {this.connection = SQLiteDatabase.getConnection();}
 
     public void addProduct(Product product) {
-        Product existedProduct = null;
-        if ((existedProduct = getProductByTypeAndNumber(product.getType(), product.getNumber())) != null) {
+        if (getProductByTypeAndNumber(product.getType(), product.getNumber()) != null) {
             editProduct(
                     product.getType(), product.getNumber(), product.getName(),
                     product.getPrice(), product.getCount()
